@@ -40,6 +40,10 @@ def upload_file(fileName, bucket, objectName = None):
 	except ClientError as e:
 		return False
 	return True
+
+def upload_to_ipfs(fileName):
+	newfile = ipfsclient.add(fileName)
+	return newfile['Hash']
 		
 		
 if len(sys.argv) > 1:
@@ -53,4 +57,6 @@ if len(sys.argv) > 1:
 		buckets = list_buckets()
 		for i in buckets:
 			print("Bucket Name: %s" % i)
-
+	elif sys.argv[1] == '--upload-file':
+		retval = upload_to_ipfs(sys.argv[2])
+		print(retval)
